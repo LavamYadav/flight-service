@@ -3,6 +3,11 @@ package com.cg.fms.payload;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * @author Lavam
+ *
+ * @param <T>
+ */
 @JsonInclude(Include.NON_NULL)
 public class RestResponse<T> {
 

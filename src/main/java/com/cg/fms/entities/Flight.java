@@ -1,4 +1,4 @@
-package com.cg.fms.dto;
+package com.cg.fms.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

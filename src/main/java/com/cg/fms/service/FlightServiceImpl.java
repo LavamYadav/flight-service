@@ -1,6 +1,7 @@
 package com.cg.fms.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,10 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.fms.dto.Flight;
+import com.cg.fms.entities.Flight;
 import com.cg.fms.exceptions.FlightNotFoundException;
 import com.cg.fms.repository.FlightRepository;
 
+/**
+ * @author Lavam
+ *
+ */
 @Service
 public class FlightServiceImpl implements FlightService{
 	@Autowired

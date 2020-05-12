@@ -2,9 +2,13 @@ package com.cg.fms.service;
 
 import java.util.List;
 
-import com.cg.fms.dto.Flight;
+import com.cg.fms.entities.Flight;
 import com.cg.fms.exceptions.FlightNotFoundException;
 
+/**
+ * @author Lavam
+ *
+ */
 public interface FlightService {
 	
 	public List<Flight> getAllflights() throws FlightNotFoundException;

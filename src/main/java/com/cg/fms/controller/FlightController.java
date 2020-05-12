@@ -1,5 +1,7 @@
 package com.cg.fms.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.fms.dto.Flight;
+import com.cg.fms.entities.Flight;
 import com.cg.fms.exceptions.FlightNotFoundException;
 import com.cg.fms.payload.RestResponse;
 import com.cg.fms.service.FlightServiceImpl;
 
+
+/**
+ * @author Lavam
+ *
+ */
 @RestController
 @RequestMapping("/flight")
 public class FlightController {
@@ -27,7 +34,7 @@ public class FlightController {
 	private static final Logger logger = LoggerFactory.getLogger(FlightController.class);
 
     //creating a get mapping that retrieves all the flights detail from the database
-	@GetMapping("/flight/all")
+	@GetMapping("/showAllFlights")
 	public ResponseEntity<?> getAllFlights() {
 		logger.info("viewing flight");
 		try {
@@ -41,7 +48,7 @@ public class FlightController {
 	}
 
     //creating a get mapping that retrieves the detail of a specific flight  
-	@GetMapping("/flight/{flightNumber}")
+	@GetMapping("/showFlightByFlightNumber/{flightNumber}")
 	private ResponseEntity<?> getFlights(@PathVariable("flightNumber") int flightNumber) {
 		logger.info("search flight");
 		try {
@@ -55,7 +62,7 @@ public class FlightController {
 	}
 
     //creating a delete mapping that deletes a specified flight 
-	@DeleteMapping("/flight/{flightNumber}")
+	@DeleteMapping("/deleteFlight/{flightNumber}")
 	public ResponseEntity<?> deleteFlight(@PathVariable("flightNumber") int flightNumber) {
 		logger.info("removing flight");
 		
@@ -70,8 +77,8 @@ public class FlightController {
 	}
 
     //creating post mapping that post the flight detail in the database 
-	@PostMapping("/flights/add")
-	public ResponseEntity<?> saveFlight(@RequestBody Flight flights) {
+	@PostMapping("/addFlight")
+	public ResponseEntity<?> saveFlight(@Valid @RequestBody Flight flights) {
 		logger.info("adding flight");
 		try {
 			flightService.saveOrUpdate(flights);
@@ -86,8 +93,8 @@ public class FlightController {
 	}
 
     //creating put mapping that updates the flight detail 
-	@PutMapping("/flights/modify")
-	public ResponseEntity<?> update(@RequestBody Flight flights) {
+	@PutMapping("/modifyFlight")
+	public ResponseEntity<?> update(@Valid @RequestBody Flight flights) {
 		logger.info("modifying flight");
 		try {
 			flightService.saveOrUpdate(flights);
