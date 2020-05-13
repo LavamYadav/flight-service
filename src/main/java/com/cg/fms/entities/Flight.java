@@ -1,25 +1,24 @@
 package com.cg.fms.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table
 public class Flight {
 
 	@Id
-	@Column(name = "flight_number")
 	private int flightNumber;
 
-	@Column(name = "flight_model")
+	@NotEmpty(message = "Flight Model is Empty ")
 	private String flightModel;
 
-	@Column(name = "carrier_name")
+	@NotEmpty(message = "Carrier Name is Empty ")
 	private String carrierName;
 
-	@Column(name = "seat_capacity")
+	
 	private int seatCapacity;
 
 	public Flight() {
