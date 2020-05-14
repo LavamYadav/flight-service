@@ -1,16 +1,16 @@
 package com.cg.fms.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.math.BigInteger;
 
 @Entity
 @Table
 public class Flight {
 
 	@Id
-	private int flightNumber;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private BigInteger flightNumber;
 
 	@NotEmpty(message = "Flight Model is Empty ")
 	private String flightModel;
@@ -18,7 +18,6 @@ public class Flight {
 	@NotEmpty(message = "Carrier Name is Empty ")
 	private String carrierName;
 
-	
 	private int seatCapacity;
 
 	public Flight() {
@@ -26,17 +25,11 @@ public class Flight {
 
 	}
 
-	public int getFlightNumber() {
+	public BigInteger getFlightNumber() {
 		return flightNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "Flight [flightNumber=" + flightNumber + ", flightModel=" + flightModel + ", carrierName=" + carrierName
-				+ ", seatCapacity=" + seatCapacity + "]";
-	}
-
-	public void setFlightNumber(int flightNumber) {
+	public void setFlightNumber(BigInteger flightNumber) {
 		this.flightNumber = flightNumber;
 	}
 

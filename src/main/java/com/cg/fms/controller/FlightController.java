@@ -6,25 +6,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cg.fms.entities.Flight;
 import com.cg.fms.exceptions.FlightNotFoundException;
 import com.cg.fms.payload.RestResponse;
 import com.cg.fms.service.FlightServiceImpl;
 
+import java.math.BigInteger;
+
 
 /**
  * @author Lavam
  *
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/flight")
 public class FlightController {
@@ -39,7 +35,7 @@ public class FlightController {
 		logger.info("viewing flight");
 		try {
 			logger.info("display flight");
-			return ResponseEntity.ok(new RestResponse<>(true, "Flights Found",flightService.getAllflights()));
+			return ResponseEntity.ok(new RestResponse<>(true, "Flights Found",flightService.getAllFlights()));
 		} catch (FlightNotFoundException e) {
 			logger.error("no flight present");
 			return ResponseEntity.ok(new RestResponse<>(false,e.getMessage()));
@@ -49,7 +45,7 @@ public class FlightController {
 
     //creating a get mapping that retrieves the detail of a specific flight  
 	@GetMapping("/showFlightByFlightNumber/{flightNumber}")
-	private ResponseEntity<?> getFlights(@PathVariable("flightNumber") int flightNumber) {
+	private ResponseEntity<?> getFlights(@PathVariable("flightNumber") BigInteger flightNumber) {
 		logger.info("search flight");
 		try {
 			
@@ -63,13 +59,13 @@ public class FlightController {
 
     //creating a delete mapping that deletes a specified flight 
 	@DeleteMapping("/deleteFlight/{flightNumber}")
-	public ResponseEntity<?> deleteFlight(@PathVariable("flightNumber") int flightNumber) {
+	public ResponseEntity<?> deleteFlight(@PathVariable("flightNumber") BigInteger flightNumber) {
 		logger.info("removing flight");
 		
 		try {
 			flightService.delete(flightNumber);
 			logger.info("flight removed");
-			return ResponseEntity.ok(new RestResponse<>(false,"Flight deleted"));
+			return ResponseEntity.ok(new RestResponse<>(true,"Flight deleted"));
 		} catch (FlightNotFoundException e) {
 			logger.info("flight not removed");
 			return ResponseEntity.ok(new RestResponse<>(false,e.getMessage()));
@@ -83,7 +79,7 @@ public class FlightController {
 		try {
 			flightService.saveOrUpdate(flights);
 			logger.info("added flight");
-			return ResponseEntity.ok(new RestResponse<>(true, "Flights Found",flights.getFlightNumber()));
+			return ResponseEntity.ok(new RestResponse<>(true, "Flights added"));
 			
 		} catch (FlightNotFoundException e) {
 			logger.error("flight not added");
@@ -97,7 +93,7 @@ public class FlightController {
 	public ResponseEntity<?> update(@Valid @RequestBody Flight flights) {
 		logger.info("modifying flight");
 		try {
-			flightService.saveOrUpdate(flights);
+			flightService.update(flights,flights.getFlightNumber());
 			logger.info("modified flight");
 			return ResponseEntity.ok(new RestResponse<>(true, "Flights Found",flights));
 		} catch (FlightNotFoundException e) {

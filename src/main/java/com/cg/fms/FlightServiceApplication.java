@@ -18,7 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class FlightServiceApplication {
 
 	public static void main(String[] args) {
-		System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "prod");
 		SpringApplication.run(FlightServiceApplication.class, args);
 	}
 

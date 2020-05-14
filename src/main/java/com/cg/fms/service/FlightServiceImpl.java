@@ -1,5 +1,6 @@
 package com.cg.fms.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class FlightServiceImpl implements FlightService{
 	private static final Logger logger = LoggerFactory.getLogger(FlightService.class);
 
 	//getting all flights record by using the method findaAll() of CrudRepository
-	public List<Flight> getAllflights() throws FlightNotFoundException{
+	public List<Flight> getAllFlights() throws FlightNotFoundException{
 		List<Flight> flights = new ArrayList<>();
 		logger.info("viewing flight");
 		flightRepository.findAll().forEach(flight1 -> flights.add(flight1));
@@ -40,7 +41,7 @@ public class FlightServiceImpl implements FlightService{
 	}
 
 	//getting a specific flight by using the method findById() of CrudRepository
-	public Flight getFlightsByFlightNumber(int flightNumber) throws FlightNotFoundException{
+	public Flight getFlightsByFlightNumber(BigInteger flightNumber) throws FlightNotFoundException{
 		logger.info("viewing flight using flight number");
 		Optional<Flight> flight = flightRepository.findById(flightNumber);
 		if(!flight.isPresent())
@@ -54,20 +55,13 @@ public class FlightServiceImpl implements FlightService{
 
 	//saving a specific flight by using the method save() of CrudRepository  
 	public void saveOrUpdate(Flight flight) throws FlightNotFoundException{
-		
 		logger.info("adding flight");
-		Optional<Flight> flightUpdate = flightRepository.findById(flight.getFlightNumber());
-		if(flightUpdate.isPresent())
-		{
-			logger.error("flight already exists");
-			throw new FlightNotFoundException("Flight with id "+flight.getFlightNumber()+" already present");
-		}
 		logger.info("flight added");
 		flightRepository.save(flight);
 	}
 
 	//deleting a specific flight by using the method deleteById() of CrudRepository 
-	public void delete(int flightNumber) throws FlightNotFoundException{
+	public void delete(BigInteger flightNumber) throws FlightNotFoundException{
 		Optional<Flight> flight = flightRepository.findById(flightNumber);
 		logger.info("Deleting flight");
 		if(!flight.isPresent())
@@ -80,7 +74,7 @@ public class FlightServiceImpl implements FlightService{
 	}
 
 	//updating a flight
-	public void update(Flight flights, int flightNumber) throws FlightNotFoundException{
+	public void update(Flight flights, BigInteger flightNumber) throws FlightNotFoundException{
 		logger.info("Updating flight");
 		Optional<Flight> flightUpdate = flightRepository.findById(flightNumber);
 		if(!flightUpdate.isPresent())
